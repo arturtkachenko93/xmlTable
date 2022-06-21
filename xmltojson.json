@@ -1,0 +1,4082 @@
+{
+  "rpc-reply": {
+    "configuration": {
+      "version": "21.4R1.12",
+      "system": {
+        "host-name": "fw001-001",
+        "root-authentication": {
+          "encrypted-password": "/* SECRET-DATA */"
+        },
+        "login": {
+          "class": {
+            "name": "read-only-view",
+            "permissions": [
+              "security",
+              "view",
+              "view-configuration"
+            ]
+          },
+          "user": [
+            {
+              "name": "pasha",
+              "full-name": "Pavel Korsakov",
+              "uid": 2000,
+              "class": "super-user",
+              "authentication": {
+                "encrypted-password": "/* SECRET-DATA */"
+              }
+            },
+            {
+              "name": "readonly-users",
+              "uid": 2001,
+              "class": "read-only-view"
+            },
+            {
+              "name": "super-users",
+              "uid": 2002,
+              "class": "super-user"
+            }
+          ]
+        },
+        "services": {
+          "ssh": ""
+        },
+        "time-zone": "Europe/Moscow",
+        "authentication-order": [
+          "radius",
+          "password"
+        ],
+        "name-server": [
+          {
+            "name": "10.1.1.10"
+          },
+          {
+            "name": "10.110.1.2"
+          }
+        ],
+        "radius-server": [
+          {
+            "name": "10.1.1.76",
+            "source-address": "10.1.0.1"
+          },
+          {
+            "name": "10.110.1.106",
+            "source-address": "10.1.0.1"
+          }
+        ],
+        "syslog": {
+          "host": {
+            "name": "10.1.1.185",
+            "contents": {
+              "name": "any",
+              "any": ""
+            },
+            "source-address": "10.1.0.1"
+          },
+          "file": [
+            {
+              "name": "messages",
+              "contents": [
+                {
+                  "name": "any",
+                  "warning": ""
+                },
+                {
+                  "name": "authorization",
+                  "notice": ""
+                }
+              ],
+              "match": "!/var/agentx/master"
+            },
+            {
+              "name": "traffic.log",
+              "contents": {
+                "name": "user",
+                "info": ""
+              },
+              "match": "RT_FLOW_SESSION"
+            }
+          ]
+        },
+        "ntp": {
+          "server": {
+            "name": "10.100.1.3"
+          }
+        }
+      },
+      "chassis": {
+        "aggregated-devices": {
+          "ethernet": {
+            "device-count": 2
+          }
+        },
+        "alarm": {
+          "management-ethernet": {
+            "link-down": "ignore"
+          }
+        }
+      },
+      "security": {
+        "log": {
+          "mode": "event"
+        },
+        "policies": {
+          "policy": [
+            {
+              "from-zone-name": "ae1.35",
+              "to-zone-name": "outside",
+              "policy": [
+                {
+                  "name": "ADs",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "ad_all",
+                    "application": [
+                      "junos-dns-tcp",
+                      "junos-dns-udp",
+                      "junos-ntp",
+                      "junos-smb-session"
+                    ]
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": "Jira",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "jira",
+                    "application": "jira"
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": 3,
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": [
+                      "confluence",
+                      "portal",
+                      "dev_squadus"
+                    ],
+                    "application": "junos-https"
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": 4,
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "rooms",
+                    "application": [
+                      "junos-http",
+                      "junos-https"
+                    ]
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": "rfc1918",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "rfc1918",
+                    "application": "any"
+                  },
+                  "then": {
+                    "permit": "",
+                    "log": {
+                      "session-close": ""
+                    }
+                  }
+                },
+                {
+                  "name": "default",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "any",
+                    "application": "any"
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                }
+              ]
+            },
+            {
+              "from-zone-name": "ae1.42",
+              "to-zone-name": "outside",
+              "policy": [
+                {
+                  "name": "ADs",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "ad_all",
+                    "application": [
+                      "junos-dns-tcp",
+                      "junos-dns-udp",
+                      "junos-ntp",
+                      "junos-smb-session"
+                    ]
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": "Jira",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "jira",
+                    "application": "jira"
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": 3,
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": [
+                      "confluence",
+                      "portal",
+                      "dev_squadus"
+                    ],
+                    "application": "junos-https"
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": 4,
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": [
+                      "rooms",
+                      "r7-office"
+                    ],
+                    "application": [
+                      "junos-http",
+                      "junos-https"
+                    ]
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": "rfc1918",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "rfc1918",
+                    "application": "any"
+                  },
+                  "then": {
+                    "permit": "",
+                    "log": {
+                      "session-close": ""
+                    }
+                  }
+                },
+                {
+                  "name": "default",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "any",
+                    "application": "any"
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                }
+              ]
+            },
+            {
+              "from-zone-name": "ae1.46",
+              "to-zone-name": "outside",
+              "policy": [
+                {
+                  "name": "ADs",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "ad_all",
+                    "application": [
+                      "junos-dns-tcp",
+                      "junos-dns-udp",
+                      "junos-ntp",
+                      "junos-smb-session"
+                    ]
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": "Jira",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "jira",
+                    "application": "jira"
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": 3,
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": [
+                      "confluence",
+                      "portal",
+                      "dev_squadus",
+                      "sales.myoffice.ru"
+                    ],
+                    "application": "junos-https"
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": 4,
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "rooms",
+                    "application": [
+                      "junos-http",
+                      "junos-https"
+                    ]
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": "rfc1918",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "rfc1918",
+                    "application": "any"
+                  },
+                  "then": {
+                    "permit": "",
+                    "log": {
+                      "session-close": ""
+                    }
+                  }
+                },
+                {
+                  "name": "default",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "any",
+                    "application": "any"
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                }
+              ]
+            },
+            {
+              "from-zone-name": "ae1.48",
+              "to-zone-name": "outside",
+              "policy": [
+                {
+                  "name": "ADs",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "ad_all",
+                    "application": [
+                      "junos-dns-tcp",
+                      "junos-dns-udp",
+                      "junos-ntp",
+                      "junos-smb-session"
+                    ]
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": "Jira",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "jira",
+                    "application": "jira"
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": 3,
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": [
+                      "confluence",
+                      "portal",
+                      "dev_squadus"
+                    ],
+                    "application": "junos-https"
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": 4,
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "rooms",
+                    "application": [
+                      "junos-http",
+                      "junos-https"
+                    ]
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": "rfc1918",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "rfc1918",
+                    "application": "any"
+                  },
+                  "then": {
+                    "permit": "",
+                    "log": {
+                      "session-close": ""
+                    }
+                  }
+                },
+                {
+                  "name": "default",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "any",
+                    "application": "any"
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                }
+              ]
+            },
+            {
+              "from-zone-name": "ae1.50",
+              "to-zone-name": "outside",
+              "policy": [
+                {
+                  "name": "ADs",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "ad_all",
+                    "application": [
+                      "junos-dns-tcp",
+                      "junos-dns-udp",
+                      "junos-ntp",
+                      "junos-smb-session"
+                    ]
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": "Jira",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "jira",
+                    "application": "jira"
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": 3,
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": [
+                      "confluence",
+                      "portal",
+                      "dev_squadus",
+                      "sales.myoffice.ru",
+                      "hub_cert"
+                    ],
+                    "application": "junos-https"
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": 4,
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "rooms",
+                    "application": [
+                      "junos-http",
+                      "junos-https"
+                    ]
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": "hub_srv",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "hub_srv",
+                    "application": "any"
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": "rfc1918",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "rfc1918",
+                    "application": "any"
+                  },
+                  "then": {
+                    "permit": "",
+                    "log": {
+                      "session-close": ""
+                    }
+                  }
+                },
+                {
+                  "name": "default",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "any",
+                    "application": "any"
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                }
+              ]
+            },
+            {
+              "from-zone-name": "ae1.52",
+              "to-zone-name": "outside",
+              "policy": [
+                {
+                  "name": "ADs",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "ad_all",
+                    "application": [
+                      "junos-dns-tcp",
+                      "junos-dns-udp",
+                      "junos-ntp",
+                      "junos-smb-session"
+                    ]
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": "Jira",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "jira",
+                    "application": "jira"
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": 3,
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": [
+                      "confluence",
+                      "portal",
+                      "dev_squadus"
+                    ],
+                    "application": "junos-https"
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": 4,
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "rooms",
+                    "application": [
+                      "junos-http",
+                      "junos-https"
+                    ]
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": "rfc1918",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "rfc1918",
+                    "application": "any"
+                  },
+                  "then": {
+                    "permit": "",
+                    "log": {
+                      "session-close": ""
+                    }
+                  }
+                },
+                {
+                  "name": "default",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "any",
+                    "application": "any"
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                }
+              ]
+            },
+            {
+              "from-zone-name": "ae1.54",
+              "to-zone-name": "outside",
+              "policy": [
+                {
+                  "name": "ADs",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "ad_all",
+                    "application": [
+                      "junos-dns-tcp",
+                      "junos-dns-udp",
+                      "junos-ntp",
+                      "junos-smb-session"
+                    ]
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": "Jira",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "jira",
+                    "application": "jira"
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": 3,
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": [
+                      "confluence",
+                      "portal",
+                      "dev_squadus"
+                    ],
+                    "application": "junos-https"
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": 4,
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "rooms",
+                    "application": [
+                      "junos-http",
+                      "junos-https"
+                    ]
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": "rfc1918",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "rfc1918",
+                    "application": "any"
+                  },
+                  "then": {
+                    "permit": "",
+                    "log": {
+                      "session-close": ""
+                    }
+                  }
+                },
+                {
+                  "name": "default",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "any",
+                    "application": "any"
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                }
+              ]
+            },
+            {
+              "from-zone-name": "ae1.56",
+              "to-zone-name": "outside",
+              "policy": [
+                {
+                  "name": "ADs",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "ad_all",
+                    "application": [
+                      "junos-dns-tcp",
+                      "junos-dns-udp",
+                      "junos-ntp",
+                      "junos-smb-session"
+                    ]
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": "Jira",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "jira",
+                    "application": "jira"
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": 3,
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": [
+                      "confluence",
+                      "portal",
+                      "dev_squadus"
+                    ],
+                    "application": "junos-https"
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": 4,
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "rooms",
+                    "application": [
+                      "junos-http",
+                      "junos-https"
+                    ]
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": "rfc1918",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "rfc1918",
+                    "application": "any"
+                  },
+                  "then": {
+                    "permit": "",
+                    "log": {
+                      "session-close": ""
+                    }
+                  }
+                },
+                {
+                  "name": "default",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "any",
+                    "application": "any"
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                }
+              ]
+            },
+            {
+              "from-zone-name": "ae1.58",
+              "to-zone-name": "outside",
+              "policy": [
+                {
+                  "name": "ADs",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "ad_all",
+                    "application": [
+                      "junos-dns-tcp",
+                      "junos-dns-udp",
+                      "junos-ntp",
+                      "junos-smb-session"
+                    ]
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": "Jira",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "jira",
+                    "application": "jira"
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": 3,
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": [
+                      "confluence",
+                      "portal",
+                      "dev_squadus"
+                    ],
+                    "application": "junos-https"
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": 4,
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "rooms",
+                    "application": [
+                      "junos-http",
+                      "junos-https"
+                    ]
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": "rfc1918",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "rfc1918",
+                    "application": "any"
+                  },
+                  "then": {
+                    "permit": "",
+                    "log": {
+                      "session-close": ""
+                    }
+                  }
+                },
+                {
+                  "name": "default",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "any",
+                    "application": "any"
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                }
+              ]
+            },
+            {
+              "from-zone-name": "ae1.60",
+              "to-zone-name": "outside",
+              "policy": [
+                {
+                  "name": "ADs",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "ad_all",
+                    "application": [
+                      "junos-dns-tcp",
+                      "junos-dns-udp",
+                      "junos-ntp",
+                      "junos-smb-session"
+                    ]
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": "Jira",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "jira",
+                    "application": "jira"
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": 3,
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": [
+                      "confluence",
+                      "portal",
+                      "dev_squadus"
+                    ],
+                    "application": "junos-https"
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": 4,
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "rooms",
+                    "application": [
+                      "junos-http",
+                      "junos-https"
+                    ]
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": "rfc1918",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "rfc1918",
+                    "application": "any"
+                  },
+                  "then": {
+                    "permit": "",
+                    "log": {
+                      "session-close": ""
+                    }
+                  }
+                },
+                {
+                  "name": "default",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "any",
+                    "application": "any"
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                }
+              ]
+            },
+            {
+              "from-zone-name": "ae1.62",
+              "to-zone-name": "outside",
+              "policy": [
+                {
+                  "name": "ADs",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "ad_all",
+                    "application": [
+                      "junos-dns-tcp",
+                      "junos-dns-udp",
+                      "junos-ntp",
+                      "junos-smb-session"
+                    ]
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": "Jira",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "jira",
+                    "application": "jira"
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": 3,
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": [
+                      "confluence",
+                      "portal",
+                      "dev_squadus"
+                    ],
+                    "application": "junos-https"
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": 4,
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "rooms",
+                    "application": [
+                      "junos-http",
+                      "junos-https"
+                    ]
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": "rfc1918",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "rfc1918",
+                    "application": "any"
+                  },
+                  "then": {
+                    "permit": "",
+                    "log": {
+                      "session-close": ""
+                    }
+                  }
+                },
+                {
+                  "name": "default",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "any",
+                    "application": "any"
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                }
+              ]
+            },
+            {
+              "from-zone-name": "ae1.64",
+              "to-zone-name": "outside",
+              "policy": [
+                {
+                  "name": "ADs",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "ad_all",
+                    "application": [
+                      "junos-dns-tcp",
+                      "junos-dns-udp",
+                      "junos-ntp",
+                      "junos-smb-session"
+                    ]
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": "Jira",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "jira",
+                    "application": "jira"
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": 3,
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": [
+                      "confluence",
+                      "portal",
+                      "dev_squadus",
+                      "mail.stageoffice.ru"
+                    ],
+                    "application": "junos-https"
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": 4,
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "rooms",
+                    "application": [
+                      "junos-http",
+                      "junos-https"
+                    ]
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": "sec_cam_asku",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": [
+                      "sec_cam_asku_pop003",
+                      "sec_cam_asku_pop100"
+                    ],
+                    "application": "any"
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": "rfc1918",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "rfc1918",
+                    "application": "any"
+                  },
+                  "then": {
+                    "permit": "",
+                    "log": {
+                      "session-close": ""
+                    }
+                  }
+                },
+                {
+                  "name": "default",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "any",
+                    "application": "any"
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                }
+              ]
+            },
+            {
+              "from-zone-name": "ae1.66",
+              "to-zone-name": "outside",
+              "policy": [
+                {
+                  "name": "ADs",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "ad_all",
+                    "application": [
+                      "junos-dns-tcp",
+                      "junos-dns-udp",
+                      "junos-ntp",
+                      "junos-smb-session"
+                    ]
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": "Jira",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "jira",
+                    "application": "jira"
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": 3,
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": [
+                      "confluence",
+                      "portal",
+                      "dev_squadus"
+                    ],
+                    "application": "junos-https"
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": 4,
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "rooms",
+                    "application": [
+                      "junos-http",
+                      "junos-https"
+                    ]
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": "build_srv",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": [
+                      "md_dc",
+                      "pop110_it_vm",
+                      "pop110_dev_vm"
+                    ],
+                    "application": "any"
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": "rfc1918",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "rfc1918",
+                    "application": "any"
+                  },
+                  "then": {
+                    "permit": "",
+                    "log": {
+                      "session-close": ""
+                    }
+                  }
+                },
+                {
+                  "name": "default",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "any",
+                    "application": "any"
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                }
+              ]
+            },
+            {
+              "from-zone-name": "ae1.68",
+              "to-zone-name": "outside",
+              "policy": [
+                {
+                  "name": "ADs",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "ad_all",
+                    "application": [
+                      "junos-dns-tcp",
+                      "junos-dns-udp",
+                      "junos-ntp",
+                      "junos-smb-session"
+                    ]
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": "Jira",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "jira",
+                    "application": "jira"
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": 3,
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": [
+                      "confluence",
+                      "portal",
+                      "dev_squadus"
+                    ],
+                    "application": "junos-https"
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": 4,
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "rooms",
+                    "application": [
+                      "junos-http",
+                      "junos-https"
+                    ]
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": "rfc1918",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "rfc1918",
+                    "application": "any"
+                  },
+                  "then": {
+                    "permit": "",
+                    "log": {
+                      "session-close": ""
+                    }
+                  }
+                },
+                {
+                  "name": "default",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "any",
+                    "application": "any"
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                }
+              ]
+            },
+            {
+              "from-zone-name": "ae1.81-94",
+              "to-zone-name": "outside",
+              "policy": [
+                {
+                  "name": "ADs",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "ad_all",
+                    "application": [
+                      "junos-dns-tcp",
+                      "junos-dns-udp",
+                      "junos-ntp",
+                      "junos-smb-session"
+                    ]
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": "Jira",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "jira",
+                    "application": "jira"
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": 3,
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": [
+                      "confluence",
+                      "portal",
+                      "dev_squadus"
+                    ],
+                    "application": "junos-https"
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": 4,
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "rooms",
+                    "application": [
+                      "junos-http",
+                      "junos-https"
+                    ]
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": "rfc1918",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "rfc1918",
+                    "application": "any"
+                  },
+                  "then": {
+                    "permit": "",
+                    "log": {
+                      "session-close": ""
+                    }
+                  }
+                },
+                {
+                  "name": "default",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "any",
+                    "application": "any"
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                }
+              ]
+            },
+            {
+              "from-zone-name": "ae1.70",
+              "to-zone-name": "outside",
+              "policy": [
+                {
+                  "name": "ADs",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "ad_all",
+                    "application": [
+                      "junos-dns-tcp",
+                      "junos-dns-udp",
+                      "junos-ntp",
+                      "junos-smb-session"
+                    ]
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": "Jira",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "jira",
+                    "application": "jira"
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": 3,
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": [
+                      "confluence",
+                      "portal",
+                      "dev_squadus"
+                    ],
+                    "application": "junos-https"
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": 4,
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "rooms",
+                    "application": [
+                      "junos-http",
+                      "junos-https"
+                    ]
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": "rfc1918",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "rfc1918",
+                    "application": "any"
+                  },
+                  "then": {
+                    "permit": "",
+                    "log": {
+                      "session-close": ""
+                    }
+                  }
+                },
+                {
+                  "name": "default",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "any",
+                    "application": "any"
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                }
+              ]
+            },
+            {
+              "from-zone-name": "ae1.71",
+              "to-zone-name": "outside",
+              "policy": [
+                {
+                  "name": "ADs",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "ad_all",
+                    "application": [
+                      "junos-dns-tcp",
+                      "junos-dns-udp",
+                      "junos-ntp",
+                      "junos-smb-session"
+                    ]
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": "Jira",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "jira",
+                    "application": "jira"
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": 3,
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": [
+                      "confluence",
+                      "portal",
+                      "dev_squadus"
+                    ],
+                    "application": "junos-https"
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": 4,
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "rooms",
+                    "application": [
+                      "junos-http",
+                      "junos-https"
+                    ]
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": "rfc1918",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "rfc1918",
+                    "application": "any"
+                  },
+                  "then": {
+                    "permit": "",
+                    "log": {
+                      "session-close": ""
+                    }
+                  }
+                },
+                {
+                  "name": "default",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "any",
+                    "application": "any"
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                }
+              ]
+            },
+            {
+              "from-zone-name": "ae1.6",
+              "to-zone-name": "outside",
+              "policy": [
+                {
+                  "name": "hub_students",
+                  "match": {
+                    "source-address": "hub_students",
+                    "destination-address": "hub_srv",
+                    "application": [
+                      "junos-ssh",
+                      "junos-http",
+                      "junos-https",
+                      "junos-rdp",
+                      "pxmx"
+                    ]
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": "rfc1918",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "rfc1918",
+                    "application": "any"
+                  },
+                  "then": {
+                    "deny": ""
+                  }
+                },
+                {
+                  "name": "default",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "any",
+                    "application": "any"
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                }
+              ]
+            },
+            {
+              "from-zone-name": "ae1.64",
+              "to-zone-name": "ae1.8",
+              "policy": {
+                "name": 1,
+                "match": {
+                  "source-address": "any",
+                  "destination-address": "any",
+                  "application": "any"
+                },
+                "then": {
+                  "permit": ""
+                }
+              }
+            },
+            {
+              "from-zone-name": "ae1.46",
+              "to-zone-name": "ae1.181",
+              "policy": {
+                "name": 1,
+                "match": {
+                  "source-address": "any",
+                  "destination-address": "mo-rebateme",
+                  "application": "any"
+                },
+                "then": {
+                  "permit": ""
+                }
+              }
+            },
+            {
+              "from-zone-name": "ae1.64",
+              "to-zone-name": "ae1.182",
+              "policy": {
+                "name": 1,
+                "match": {
+                  "source-address": "any",
+                  "destination-address": "any",
+                  "application": "any"
+                },
+                "then": {
+                  "permit": ""
+                }
+              }
+            },
+            {
+              "from-zone-name": "ae1.8",
+              "to-zone-name": "outside",
+              "policy": {
+                "name": 1,
+                "match": {
+                  "source-address": "any",
+                  "destination-address": "sec_cam_asku_pop003",
+                  "application": "any"
+                },
+                "then": {
+                  "permit": ""
+                }
+              }
+            },
+            {
+              "from-zone-name": "ae1.60",
+              "to-zone-name": "ae1.80",
+              "policy": {
+                "name": 1,
+                "match": {
+                  "source-address": "any",
+                  "destination-address": "tokens",
+                  "application": "any"
+                },
+                "then": {
+                  "permit": ""
+                }
+              }
+            },
+            {
+              "from-zone-name": "ae1.60",
+              "to-zone-name": "ae1.902",
+              "policy": {
+                "name": 1,
+                "match": {
+                  "source-address": "any",
+                  "destination-address": "1c",
+                  "application": "1c"
+                },
+                "then": {
+                  "permit": ""
+                }
+              }
+            },
+            {
+              "from-zone-name": "ae1.62",
+              "to-zone-name": "ae1.902",
+              "policy": {
+                "name": 1,
+                "match": {
+                  "source-address": "any",
+                  "destination-address": "1c",
+                  "application": "1c"
+                },
+                "then": {
+                  "permit": ""
+                }
+              }
+            },
+            {
+              "from-zone-name": "ae1.2",
+              "to-zone-name": "ae1.902",
+              "policy": {
+                "name": 1,
+                "match": {
+                  "source-address": "terminal_srv",
+                  "destination-address": "1c",
+                  "application": "1c"
+                },
+                "then": {
+                  "permit": ""
+                }
+              }
+            },
+            {
+              "from-zone-name": "ae1.901",
+              "to-zone-name": "outside",
+              "policy": [
+                {
+                  "name": "rfc1918",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "rfc1918",
+                    "application": "any"
+                  },
+                  "then": {
+                    "deny": ""
+                  }
+                },
+                {
+                  "name": "default",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "any",
+                    "application": "any"
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                }
+              ]
+            },
+            {
+              "from-zone-name": "ae1.39",
+              "to-zone-name": "outside",
+              "policy": [
+                {
+                  "name": "devs_dc",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "devs_dc",
+                    "application": "any"
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                },
+                {
+                  "name": "rfc1918",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "rfc1918",
+                    "application": "any"
+                  },
+                  "then": {
+                    "deny": ""
+                  }
+                },
+                {
+                  "name": "default",
+                  "match": {
+                    "source-address": "any",
+                    "destination-address": "any",
+                    "application": "any"
+                  },
+                  "then": {
+                    "permit": ""
+                  }
+                }
+              ]
+            }
+          ],
+          "global": {
+            "policy": [
+              {
+                "name": "server_VM_to_all",
+                "match": {
+                  "source-address": "any",
+                  "destination-address": "any",
+                  "application": "any",
+                  "from-zone": "ae1.2"
+                },
+                "then": {
+                  "permit": ""
+                }
+              },
+              {
+                "name": "outside_to_all",
+                "match": {
+                  "source-address": "any",
+                  "destination-address": "any",
+                  "application": "any",
+                  "from-zone": "outside"
+                },
+                "then": {
+                  "permit": ""
+                }
+              },
+              {
+                "name": "it_rdp_ssh_to_all",
+                "match": {
+                  "source-address": "any",
+                  "destination-address": "any",
+                  "application": [
+                    "nct-rdp",
+                    "nct-ssh"
+                  ],
+                  "from-zone": "ae1.44"
+                },
+                "then": {
+                  "permit": ""
+                }
+              },
+              {
+                "name": "it_to_all",
+                "match": {
+                  "source-address": "any",
+                  "destination-address": "any",
+                  "application": "any",
+                  "from-zone": "ae1.44"
+                },
+                "then": {
+                  "permit": ""
+                }
+              },
+              {
+                "name": "security_it_to_all",
+                "match": {
+                  "source-address": "any",
+                  "destination-address": "any",
+                  "application": "any",
+                  "from-zone": [
+                    "ae1.80",
+                    "ae1.180",
+                    "ae1.181",
+                    "ae1.182",
+                    "ae1.183",
+                    "ae1.184",
+                    "ae1.185"
+                  ]
+                },
+                "then": {
+                  "permit": ""
+                }
+              },
+              {
+                "name": "Wireless_hidden_to_all",
+                "match": {
+                  "source-address": "any",
+                  "destination-address": "any",
+                  "application": "any",
+                  "from-zone": "ae1.12"
+                },
+                "then": {
+                  "permit": ""
+                }
+              },
+              {
+                "name": "all_to_Wireless_hidden",
+                "match": {
+                  "source-address": "any",
+                  "destination-address": "any",
+                  "application": "any",
+                  "to-zone": "ae1.12"
+                },
+                "then": {
+                  "permit": ""
+                }
+              },
+              {
+                "name": "all_to_printers",
+                "match": {
+                  "source-address": "any",
+                  "destination-address": "any",
+                  "application": "any",
+                  "to-zone": "ae1.40"
+                },
+                "then": {
+                  "permit": ""
+                }
+              },
+              {
+                "name": "printers_to_all",
+                "match": {
+                  "source-address": "any",
+                  "destination-address": "any",
+                  "application": "any",
+                  "from-zone": "ae1.40"
+                },
+                "then": {
+                  "permit": ""
+                }
+              },
+              {
+                "name": "all_to_server_VM",
+                "match": {
+                  "source-address": "any",
+                  "destination-address": "any",
+                  "application": "any",
+                  "to-zone": "ae1.2"
+                },
+                "then": {
+                  "permit": ""
+                }
+              },
+              {
+                "name": "voip_to_all",
+                "match": {
+                  "source-address": "any",
+                  "destination-address": "any",
+                  "application": "any",
+                  "from-zone": "ae1.5"
+                },
+                "then": {
+                  "permit": ""
+                }
+              },
+              {
+                "name": "DLP",
+                "match": {
+                  "source-address": "any",
+                  "destination-address": "any",
+                  "application": "DLP",
+                  "to-zone": "ae1.182"
+                },
+                "then": {
+                  "permit": ""
+                }
+              },
+              {
+                "name": "qnap",
+                "match": {
+                  "source-address": "any",
+                  "destination-address": "any",
+                  "application": "any",
+                  "from-zone": "ae1.31"
+                },
+                "then": {
+                  "permit": ""
+                }
+              },
+              {
+                "name": "esxi",
+                "match": {
+                  "source-address": "any",
+                  "destination-address": "any",
+                  "application": "any",
+                  "from-zone": "ae1.7"
+                },
+                "then": {
+                  "permit": ""
+                }
+              },
+              {
+                "name": "management",
+                "match": {
+                  "source-address": "any",
+                  "destination-address": "any",
+                  "application": "any",
+                  "from-zone": "ae1.69"
+                },
+                "then": {
+                  "permit": ""
+                }
+              },
+              {
+                "name": "security",
+                "match": {
+                  "source-address": "any",
+                  "destination-address": "any",
+                  "application": "any",
+                  "from-zone": "ae1.64",
+                  "to-zone": [
+                    "ae1.180",
+                    "ae1.181",
+                    "ae1.183",
+                    "ae1.184",
+                    "ae1.185"
+                  ]
+                },
+                "then": {
+                  "permit": ""
+                }
+              }
+            ]
+          }
+        },
+        "zones": {
+          "security-zone": [
+            {
+              "name": "outside",
+              "address-book": {
+                "address": [
+                  {
+                    "name": "ad_msk",
+                    "ip-prefix": "10.1.1.10/32"
+                  },
+                  {
+                    "name": "ad_bca",
+                    "ip-prefix": "10.3.1.10/32"
+                  },
+                  {
+                    "name": "ad_spb",
+                    "ip-prefix": "10.100.1.3/32"
+                  },
+                  {
+                    "name": "ad_dc",
+                    "ip-prefix": "10.110.1.2/32"
+                  },
+                  {
+                    "name": "jira",
+                    "dns-name": {
+                      "name": "jira.ncloudtech.ru"
+                    }
+                  },
+                  {
+                    "name": "confluence",
+                    "dns-name": {
+                      "name": "confluence.ncloudtech.ru"
+                    }
+                  },
+                  {
+                    "name": "portal",
+                    "dns-name": {
+                      "name": "portal.ncloudtech.ru"
+                    }
+                  },
+                  {
+                    "name": "rooms",
+                    "ip-prefix": "10.110.1.169/32"
+                  },
+                  {
+                    "name": "rfc1918",
+                    "ip-prefix": "10.0.0.0/8"
+                  },
+                  {
+                    "name": "sec_cam_asku_pop003",
+                    "ip-prefix": "10.3.8.0/24"
+                  },
+                  {
+                    "name": "hub_srv",
+                    "ip-prefix": "10.110.30.0/24"
+                  },
+                  {
+                    "name": "devs_dc",
+                    "ip-prefix": "10.7.0.0/16"
+                  },
+                  {
+                    "name": "md_dc",
+                    "ip-prefix": "10.160.0.0/16"
+                  },
+                  {
+                    "name": "pop110_it_vm",
+                    "ip-prefix": "10.110.1.0/24"
+                  },
+                  {
+                    "name": "pop110_dev_vm",
+                    "ip-prefix": "10.110.4.0/22"
+                  },
+                  {
+                    "name": "dev_squadus",
+                    "dns-name": {
+                      "name": "im.stageoffice.ru"
+                    }
+                  },
+                  {
+                    "name": "r7-office",
+                    "ip-prefix": "10.160.112.25/32"
+                  },
+                  {
+                    "name": "sec_cam_asku_pop100",
+                    "ip-prefix": "10.100.8.0/24"
+                  },
+                  {
+                    "name": "mail.stageoffice.ru",
+                    "dns-name": {
+                      "name": "mail.stageoffice.ru"
+                    }
+                  },
+                  {
+                    "name": "sales.myoffice.ru",
+                    "dns-name": {
+                      "name": "sales.myoffice.ru"
+                    }
+                  },
+                  {
+                    "name": "hub_cert",
+                    "ip-prefix": "10.160.103.178/32"
+                  }
+                ],
+                "address-set": {
+                  "name": "ad_all",
+                  "address": [
+                    {
+                      "name": "ad_msk"
+                    },
+                    {
+                      "name": "ad_bca"
+                    },
+                    {
+                      "name": "ad_spb"
+                    },
+                    {
+                      "name": "ad_dc"
+                    }
+                  ]
+                }
+              },
+              "host-inbound-traffic": {
+                "system-services": [
+                  {
+                    "name": "ping"
+                  },
+                  {
+                    "name": "traceroute"
+                  }
+                ]
+              },
+              "interfaces": {
+                "name": "ae0.999"
+              }
+            },
+            {
+              "name": "ae1.2",
+              "description": "server_VM",
+              "address-book": {
+                "address": {
+                  "name": "terminal_srv",
+                  "ip-prefix": "10.1.1.25/32"
+                }
+              },
+              "host-inbound-traffic": {
+                "system-services": [
+                  {
+                    "name": "traceroute"
+                  },
+                  {
+                    "name": "ping"
+                  }
+                ]
+              },
+              "interfaces": {
+                "name": "ae1.2"
+              }
+            },
+            {
+              "name": "ae1.3",
+              "description": "servers_mgmt",
+              "host-inbound-traffic": {
+                "system-services": [
+                  {
+                    "name": "traceroute"
+                  },
+                  {
+                    "name": "ping"
+                  }
+                ]
+              },
+              "interfaces": {
+                "name": "ae1.3"
+              }
+            },
+            {
+              "name": "ae1.5",
+              "description": "Voip",
+              "host-inbound-traffic": {
+                "system-services": [
+                  {
+                    "name": "traceroute"
+                  },
+                  {
+                    "name": "ping"
+                  },
+                  {
+                    "name": "dhcp"
+                  }
+                ]
+              },
+              "interfaces": {
+                "name": "ae1.5"
+              }
+            },
+            {
+              "name": "ae1.6",
+              "description": "Guest",
+              "address-book": {
+                "address": {
+                  "name": "hub_students",
+                  "range-address": {
+                    "name": "10.1.6.2",
+                    "to": {
+                      "range-high": "10.1.6.20"
+                    }
+                  }
+                }
+              },
+              "host-inbound-traffic": {
+                "system-services": [
+                  {
+                    "name": "traceroute"
+                  },
+                  {
+                    "name": "ping"
+                  },
+                  {
+                    "name": "dhcp"
+                  }
+                ]
+              },
+              "interfaces": {
+                "name": "ae1.6"
+              }
+            },
+            {
+              "name": "ae1.7",
+              "description": "Wireless_mgmt",
+              "host-inbound-traffic": {
+                "system-services": [
+                  {
+                    "name": "traceroute"
+                  },
+                  {
+                    "name": "ping"
+                  },
+                  {
+                    "name": "dhcp"
+                  }
+                ]
+              },
+              "interfaces": {
+                "name": "ae1.7"
+              }
+            },
+            {
+              "name": "ae1.8",
+              "description": "sec_cam_asku",
+              "host-inbound-traffic": {
+                "system-services": [
+                  {
+                    "name": "traceroute"
+                  },
+                  {
+                    "name": "ping"
+                  }
+                ]
+              },
+              "interfaces": {
+                "name": "ae1.8"
+              }
+            },
+            {
+              "name": "ae1.12",
+              "description": "Wireless_hidden",
+              "host-inbound-traffic": {
+                "system-services": [
+                  {
+                    "name": "traceroute"
+                  },
+                  {
+                    "name": "ping"
+                  },
+                  {
+                    "name": "dhcp"
+                  }
+                ]
+              },
+              "interfaces": {
+                "name": "ae1.12"
+              }
+            },
+            {
+              "name": "ae1.31",
+              "description": "nas",
+              "host-inbound-traffic": {
+                "system-services": [
+                  {
+                    "name": "traceroute"
+                  },
+                  {
+                    "name": "ping"
+                  }
+                ]
+              },
+              "interfaces": {
+                "name": "ae1.31"
+              }
+            },
+            {
+              "name": "ae1.35",
+              "description": "embdeed",
+              "host-inbound-traffic": {
+                "system-services": [
+                  {
+                    "name": "traceroute"
+                  },
+                  {
+                    "name": "ping"
+                  },
+                  {
+                    "name": "dhcp"
+                  }
+                ]
+              },
+              "interfaces": {
+                "name": "ae1.35"
+              }
+            },
+            {
+              "name": "ae1.39",
+              "description": "devs.MSK.server",
+              "host-inbound-traffic": {
+                "system-services": [
+                  {
+                    "name": "traceroute"
+                  },
+                  {
+                    "name": "ping"
+                  },
+                  {
+                    "name": "dhcp"
+                  }
+                ]
+              },
+              "interfaces": {
+                "name": "ae1.39"
+              }
+            },
+            {
+              "name": "ae1.40",
+              "description": "Printers",
+              "host-inbound-traffic": {
+                "system-services": [
+                  {
+                    "name": "traceroute"
+                  },
+                  {
+                    "name": "ping"
+                  },
+                  {
+                    "name": "dhcp"
+                  }
+                ]
+              },
+              "interfaces": {
+                "name": "ae1.40"
+              }
+            },
+            {
+              "name": "ae1.42",
+              "description": "products",
+              "host-inbound-traffic": {
+                "system-services": [
+                  {
+                    "name": "traceroute"
+                  },
+                  {
+                    "name": "ping"
+                  },
+                  {
+                    "name": "dhcp"
+                  }
+                ]
+              },
+              "interfaces": {
+                "name": "ae1.42"
+              }
+            },
+            {
+              "name": "ae1.44",
+              "description": "it",
+              "host-inbound-traffic": {
+                "system-services": [
+                  {
+                    "name": "traceroute"
+                  },
+                  {
+                    "name": "ping"
+                  },
+                  {
+                    "name": "dhcp"
+                  }
+                ]
+              },
+              "interfaces": {
+                "name": "ae1.44"
+              }
+            },
+            {
+              "name": "ae1.46",
+              "description": "sales",
+              "host-inbound-traffic": {
+                "system-services": [
+                  {
+                    "name": "traceroute"
+                  },
+                  {
+                    "name": "ping"
+                  },
+                  {
+                    "name": "dhcp"
+                  }
+                ]
+              },
+              "interfaces": {
+                "name": "ae1.46"
+              }
+            },
+            {
+              "name": "ae1.48",
+              "description": "commers",
+              "host-inbound-traffic": {
+                "system-services": [
+                  {
+                    "name": "traceroute"
+                  },
+                  {
+                    "name": "ping"
+                  },
+                  {
+                    "name": "dhcp"
+                  }
+                ]
+              },
+              "interfaces": {
+                "name": "ae1.48"
+              }
+            },
+            {
+              "name": "ae1.50",
+              "description": "hub",
+              "host-inbound-traffic": {
+                "system-services": [
+                  {
+                    "name": "traceroute"
+                  },
+                  {
+                    "name": "ping"
+                  },
+                  {
+                    "name": "dhcp"
+                  }
+                ]
+              },
+              "interfaces": {
+                "name": "ae1.50"
+              }
+            },
+            {
+              "name": "ae1.52",
+              "description": "devs.MSK",
+              "host-inbound-traffic": {
+                "system-services": [
+                  {
+                    "name": "traceroute"
+                  },
+                  {
+                    "name": "dhcp"
+                  },
+                  {
+                    "name": "ping"
+                  }
+                ]
+              },
+              "interfaces": {
+                "name": "ae1.52"
+              }
+            },
+            {
+              "name": "ae1.54",
+              "description": "devs.UA",
+              "host-inbound-traffic": {
+                "system-services": [
+                  {
+                    "name": "traceroute"
+                  },
+                  {
+                    "name": "dhcp"
+                  },
+                  {
+                    "name": "ping"
+                  }
+                ]
+              },
+              "interfaces": {
+                "name": "ae1.54"
+              }
+            },
+            {
+              "name": "ae1.56",
+              "description": "devs.SPb",
+              "host-inbound-traffic": {
+                "system-services": [
+                  {
+                    "name": "traceroute"
+                  },
+                  {
+                    "name": "dhcp"
+                  },
+                  {
+                    "name": "ping"
+                  }
+                ]
+              },
+              "interfaces": {
+                "name": "ae1.56"
+              }
+            },
+            {
+              "name": "ae1.58",
+              "description": "md",
+              "host-inbound-traffic": {
+                "system-services": [
+                  {
+                    "name": "traceroute"
+                  },
+                  {
+                    "name": "dhcp"
+                  },
+                  {
+                    "name": "ping"
+                  }
+                ]
+              },
+              "interfaces": {
+                "name": "ae1.58"
+              }
+            },
+            {
+              "name": "ae1.60",
+              "description": "finance",
+              "host-inbound-traffic": {
+                "system-services": [
+                  {
+                    "name": "traceroute"
+                  },
+                  {
+                    "name": "dhcp"
+                  },
+                  {
+                    "name": "ping"
+                  }
+                ]
+              },
+              "interfaces": {
+                "name": "ae1.60"
+              }
+            },
+            {
+              "name": "ae1.62",
+              "description": "hr",
+              "host-inbound-traffic": {
+                "system-services": [
+                  {
+                    "name": "traceroute"
+                  },
+                  {
+                    "name": "dhcp"
+                  },
+                  {
+                    "name": "ping"
+                  }
+                ]
+              },
+              "interfaces": {
+                "name": "ae1.62"
+              }
+            },
+            {
+              "name": "ae1.64",
+              "description": "security",
+              "host-inbound-traffic": {
+                "system-services": [
+                  {
+                    "name": "traceroute"
+                  },
+                  {
+                    "name": "dhcp"
+                  },
+                  {
+                    "name": "ping"
+                  }
+                ]
+              },
+              "interfaces": {
+                "name": "ae1.64"
+              }
+            },
+            {
+              "name": "ae1.66",
+              "description": "devs.controls",
+              "host-inbound-traffic": {
+                "system-services": [
+                  {
+                    "name": "traceroute"
+                  },
+                  {
+                    "name": "dhcp"
+                  },
+                  {
+                    "name": "ping"
+                  }
+                ]
+              },
+              "interfaces": {
+                "name": "ae1.66"
+              }
+            },
+            {
+              "name": "ae1.68",
+              "description": "others",
+              "host-inbound-traffic": {
+                "system-services": [
+                  {
+                    "name": "traceroute"
+                  },
+                  {
+                    "name": "dhcp"
+                  },
+                  {
+                    "name": "ping"
+                  }
+                ]
+              },
+              "interfaces": {
+                "name": "ae1.68"
+              }
+            },
+            {
+              "name": "ae1.69",
+              "description": "management",
+              "host-inbound-traffic": {
+                "system-services": [
+                  {
+                    "name": "traceroute"
+                  },
+                  {
+                    "name": "ping"
+                  },
+                  {
+                    "name": "ssh"
+                  },
+                  {
+                    "name": "snmp"
+                  }
+                ]
+              },
+              "interfaces": {
+                "name": "ae1.69"
+              }
+            },
+            {
+              "name": "ae1.70",
+              "description": "devs.seniors",
+              "host-inbound-traffic": {
+                "system-services": [
+                  {
+                    "name": "traceroute"
+                  },
+                  {
+                    "name": "dhcp"
+                  },
+                  {
+                    "name": "ping"
+                  }
+                ]
+              },
+              "interfaces": {
+                "name": "ae1.70"
+              }
+            },
+            {
+              "name": "ae1.71",
+              "description": "devs.devops",
+              "host-inbound-traffic": {
+                "system-services": [
+                  {
+                    "name": "traceroute"
+                  },
+                  {
+                    "name": "dhcp"
+                  },
+                  {
+                    "name": "ping"
+                  }
+                ]
+              },
+              "interfaces": {
+                "name": "ae1.71"
+              }
+            },
+            {
+              "name": "ae1.78",
+              "description": "security.friends",
+              "host-inbound-traffic": {
+                "system-services": [
+                  {
+                    "name": "traceroute"
+                  },
+                  {
+                    "name": "dhcp"
+                  },
+                  {
+                    "name": "ping"
+                  }
+                ]
+              },
+              "interfaces": {
+                "name": "ae1.78"
+              }
+            },
+            {
+              "name": "ae1.80",
+              "description": "security.it",
+              "address-book": {
+                "address": {
+                  "name": "tokens",
+                  "ip-prefix": "10.1.80.35/32"
+                }
+              },
+              "host-inbound-traffic": {
+                "system-services": [
+                  {
+                    "name": "traceroute"
+                  },
+                  {
+                    "name": "dhcp"
+                  },
+                  {
+                    "name": "ping"
+                  }
+                ]
+              },
+              "interfaces": {
+                "name": "ae1.80"
+              }
+            },
+            {
+              "name": "ae1.81-94",
+              "description": "tops",
+              "host-inbound-traffic": {
+                "system-services": [
+                  {
+                    "name": "traceroute"
+                  },
+                  {
+                    "name": "dhcp"
+                  },
+                  {
+                    "name": "ping"
+                  }
+                ]
+              },
+              "interfaces": [
+                {
+                  "name": "ae1.81"
+                },
+                {
+                  "name": "ae1.82"
+                },
+                {
+                  "name": "ae1.83"
+                },
+                {
+                  "name": "ae1.84"
+                },
+                {
+                  "name": "ae1.85"
+                },
+                {
+                  "name": "ae1.86"
+                },
+                {
+                  "name": "ae1.87"
+                },
+                {
+                  "name": "ae1.88"
+                },
+                {
+                  "name": "ae1.89"
+                },
+                {
+                  "name": "ae1.90"
+                },
+                {
+                  "name": "ae1.91"
+                },
+                {
+                  "name": "ae1.92"
+                },
+                {
+                  "name": "ae1.93"
+                },
+                {
+                  "name": "ae1.94"
+                }
+              ]
+            },
+            {
+              "name": "ae1.180",
+              "description": "sec_mgmt",
+              "host-inbound-traffic": {
+                "system-services": [
+                  {
+                    "name": "traceroute"
+                  },
+                  {
+                    "name": "ping"
+                  }
+                ]
+              },
+              "interfaces": {
+                "name": "ae1.180"
+              }
+            },
+            {
+              "name": "ae1.181",
+              "description": "sec_ext_hosts",
+              "address-book": {
+                "address": {
+                  "name": "mo-rebateme",
+                  "dns-name": {
+                    "name": "mo-rebateme.sec.nctmsk.ru"
+                  }
+                }
+              },
+              "host-inbound-traffic": {
+                "system-services": [
+                  {
+                    "name": "traceroute"
+                  },
+                  {
+                    "name": "ping"
+                  }
+                ]
+              },
+              "interfaces": {
+                "name": "ae1.181"
+              }
+            },
+            {
+              "name": "ae1.182",
+              "description": "sec_int_hosts",
+              "host-inbound-traffic": {
+                "system-services": [
+                  {
+                    "name": "traceroute"
+                  },
+                  {
+                    "name": "ping"
+                  }
+                ]
+              },
+              "interfaces": {
+                "name": "ae1.182"
+              }
+            },
+            {
+              "name": "ae1.183",
+              "description": "sec_dev_hosts",
+              "host-inbound-traffic": {
+                "system-services": [
+                  {
+                    "name": "traceroute"
+                  },
+                  {
+                    "name": "ping"
+                  }
+                ]
+              },
+              "interfaces": {
+                "name": "ae1.183"
+              }
+            },
+            {
+              "name": "ae1.184",
+              "description": "sec_other",
+              "host-inbound-traffic": {
+                "system-services": [
+                  {
+                    "name": "traceroute"
+                  },
+                  {
+                    "name": "ping"
+                  }
+                ]
+              },
+              "interfaces": {
+                "name": "ae1.184"
+              }
+            },
+            {
+              "name": "ae1.185",
+              "description": "sec_k8s_nodes",
+              "host-inbound-traffic": {
+                "system-services": [
+                  {
+                    "name": "traceroute"
+                  },
+                  {
+                    "name": "ping"
+                  }
+                ],
+                "protocols": {
+                  "name": "bgp"
+                }
+              },
+              "interfaces": {
+                "name": "ae1.185"
+              }
+            },
+            {
+              "name": "ae1.901",
+              "description": "aquarius_srv",
+              "host-inbound-traffic": {
+                "system-services": [
+                  {
+                    "name": "traceroute"
+                  },
+                  {
+                    "name": "ping"
+                  }
+                ]
+              },
+              "interfaces": {
+                "name": "ae1.901"
+              }
+            },
+            {
+              "name": "ae1.902",
+              "description": "1c",
+              "address-book": {
+                "address": {
+                  "name": "1c",
+                  "dns-name": {
+                    "name": "1c.ncloudtech.ru"
+                  }
+                }
+              },
+              "host-inbound-traffic": {
+                "system-services": [
+                  {
+                    "name": "traceroute"
+                  },
+                  {
+                    "name": "ping"
+                  }
+                ]
+              },
+              "interfaces": {
+                "name": "ae1.902"
+              }
+            }
+          ]
+        }
+      },
+      "interfaces": {
+        "interface": [
+          {
+            "name": "ge-0/0/0",
+            "description": "rt001-001_1--Gi0/0/2",
+            "ether-options": {
+              "ieee-802.3ad": {
+                "bundle": "ae0"
+              }
+            }
+          },
+          {
+            "name": "ge-0/0/1",
+            "description": "rt001-001_2--Gi0/0/3",
+            "ether-options": {
+              "ieee-802.3ad": {
+                "bundle": "ae0"
+              }
+            }
+          },
+          {
+            "name": "ge-0/0/2",
+            "description": "sw001-agg_1--Gi1/0/48",
+            "ether-options": {
+              "ieee-802.3ad": {
+                "bundle": "ae1"
+              }
+            }
+          },
+          {
+            "name": "ge-0/0/3",
+            "description": "sw001-agg_2--Gi2/0/48",
+            "ether-options": {
+              "ieee-802.3ad": {
+                "bundle": "ae1"
+              }
+            }
+          },
+          {
+            "name": "ae0",
+            "description": "rt001-001--Po2",
+            "vlan-tagging": "",
+            "aggregated-ether-options": {
+              "lacp": {
+                "active": "",
+                "periodic": "fast"
+              }
+            },
+            "unit": {
+              "name": 999,
+              "description": "rt001-001_inet",
+              "vlan-id": 999,
+              "family": {
+                "inet": {
+                  "address": {
+                    "name": "10.1.255.2/30"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "name": "ae1",
+            "description": "sw001-agg--Po48",
+            "vlan-tagging": "",
+            "aggregated-ether-options": {
+              "lacp": {
+                "active": "",
+                "periodic": "fast"
+              }
+            },
+            "unit": [
+              {
+                "name": 2,
+                "description": "server_VM",
+                "vlan-id": 2,
+                "family": {
+                  "inet": {
+                    "address": {
+                      "name": "10.1.1.2/24"
+                    }
+                  }
+                }
+              },
+              {
+                "name": 3,
+                "description": "servers_mgmt",
+                "vlan-id": 3,
+                "family": {
+                  "inet": {
+                    "address": {
+                      "name": "10.1.3.1/24"
+                    }
+                  }
+                }
+              },
+              {
+                "name": 5,
+                "description": "Voip",
+                "vlan-id": 5,
+                "family": {
+                  "inet": {
+                    "address": {
+                      "name": "10.1.5.2/24"
+                    }
+                  }
+                }
+              },
+              {
+                "name": 6,
+                "description": "Guest",
+                "vlan-id": 6,
+                "family": {
+                  "inet": {
+                    "address": {
+                      "name": "10.1.6.1/24"
+                    }
+                  }
+                }
+              },
+              {
+                "name": 7,
+                "description": "Wireless_mgmt",
+                "vlan-id": 7,
+                "family": {
+                  "inet": {
+                    "address": {
+                      "name": "10.1.7.2/24"
+                    }
+                  }
+                }
+              },
+              {
+                "name": 8,
+                "description": "sec_cam_asku",
+                "vlan-id": 8,
+                "family": {
+                  "inet": {
+                    "address": {
+                      "name": "10.1.8.1/24"
+                    }
+                  }
+                }
+              },
+              {
+                "name": 12,
+                "description": "Wireless_hidden",
+                "vlan-id": 12,
+                "family": {
+                  "inet": {
+                    "address": {
+                      "name": "10.1.12.1/24"
+                    }
+                  }
+                }
+              },
+              {
+                "name": 31,
+                "description": "nas",
+                "vlan-id": 31,
+                "family": {
+                  "inet": {
+                    "address": {
+                      "name": "10.1.31.1/24"
+                    }
+                  }
+                }
+              },
+              {
+                "name": 35,
+                "description": "embdeed",
+                "vlan-id": 35,
+                "family": {
+                  "inet": {
+                    "address": {
+                      "name": "10.1.35.1/24"
+                    }
+                  }
+                }
+              },
+              {
+                "name": 39,
+                "description": "devs.MSK.server",
+                "vlan-id": 39,
+                "family": {
+                  "inet": {
+                    "address": {
+                      "name": "10.1.39.1/24"
+                    }
+                  }
+                }
+              },
+              {
+                "name": 40,
+                "description": "Printers",
+                "vlan-id": 40,
+                "family": {
+                  "inet": {
+                    "address": {
+                      "name": "10.1.40.2/24"
+                    }
+                  }
+                }
+              },
+              {
+                "name": 42,
+                "description": "products",
+                "vlan-id": 42,
+                "family": {
+                  "inet": {
+                    "address": {
+                      "name": "10.1.42.1/24"
+                    }
+                  }
+                }
+              },
+              {
+                "name": 44,
+                "description": "it",
+                "vlan-id": 44,
+                "family": {
+                  "inet": {
+                    "address": {
+                      "name": "10.1.44.1/24"
+                    }
+                  }
+                }
+              },
+              {
+                "name": 46,
+                "description": "sales",
+                "vlan-id": 46,
+                "family": {
+                  "inet": {
+                    "address": {
+                      "name": "10.1.46.1/24"
+                    }
+                  }
+                }
+              },
+              {
+                "name": 48,
+                "description": "commers",
+                "vlan-id": 48,
+                "family": {
+                  "inet": {
+                    "address": {
+                      "name": "10.1.48.1/24"
+                    }
+                  }
+                }
+              },
+              {
+                "name": 50,
+                "description": "hub",
+                "vlan-id": 50,
+                "family": {
+                  "inet": {
+                    "address": {
+                      "name": "10.1.50.1/24"
+                    }
+                  }
+                }
+              },
+              {
+                "name": 52,
+                "description": "devs.MSK",
+                "vlan-id": 52,
+                "family": {
+                  "inet": {
+                    "address": {
+                      "name": "10.1.52.1/24"
+                    }
+                  }
+                }
+              },
+              {
+                "name": 54,
+                "description": "devs.UA",
+                "vlan-id": 54,
+                "family": {
+                  "inet": {
+                    "address": {
+                      "name": "10.1.54.1/24"
+                    }
+                  }
+                }
+              },
+              {
+                "name": 56,
+                "description": "devs.SPb",
+                "vlan-id": 56,
+                "family": {
+                  "inet": {
+                    "address": {
+                      "name": "10.1.56.1/24"
+                    }
+                  }
+                }
+              },
+              {
+                "name": 58,
+                "description": "md",
+                "vlan-id": 58,
+                "family": {
+                  "inet": {
+                    "address": {
+                      "name": "10.1.58.1/24"
+                    }
+                  }
+                }
+              },
+              {
+                "name": 60,
+                "description": "finance",
+                "vlan-id": 60,
+                "family": {
+                  "inet": {
+                    "address": {
+                      "name": "10.1.60.1/24"
+                    }
+                  }
+                }
+              },
+              {
+                "name": 62,
+                "description": "hr",
+                "vlan-id": 62,
+                "family": {
+                  "inet": {
+                    "address": {
+                      "name": "10.1.62.1/24"
+                    }
+                  }
+                }
+              },
+              {
+                "name": 64,
+                "description": "security",
+                "vlan-id": 64,
+                "family": {
+                  "inet": {
+                    "address": {
+                      "name": "10.1.64.1/24"
+                    }
+                  }
+                }
+              },
+              {
+                "name": 66,
+                "description": "devs.controls",
+                "vlan-id": 66,
+                "family": {
+                  "inet": {
+                    "address": {
+                      "name": "10.1.66.1/24"
+                    }
+                  }
+                }
+              },
+              {
+                "name": 68,
+                "description": "others",
+                "vlan-id": 68,
+                "family": {
+                  "inet": {
+                    "address": {
+                      "name": "10.1.68.1/24"
+                    }
+                  }
+                }
+              },
+              {
+                "name": 69,
+                "description": "management",
+                "vlan-id": 69,
+                "family": {
+                  "inet": {
+                    "address": {
+                      "name": "10.1.0.1/24"
+                    }
+                  }
+                }
+              },
+              {
+                "name": 70,
+                "description": "devs.seniors",
+                "vlan-id": 70,
+                "family": {
+                  "inet": {
+                    "address": {
+                      "name": "10.1.70.1/24"
+                    }
+                  }
+                }
+              },
+              {
+                "name": 71,
+                "description": "devs.devops",
+                "vlan-id": 71,
+                "family": {
+                  "inet": {
+                    "address": {
+                      "name": "10.1.71.1/24"
+                    }
+                  }
+                }
+              },
+              {
+                "name": 78,
+                "description": "security.friends",
+                "vlan-id": 78,
+                "family": {
+                  "inet": {
+                    "address": {
+                      "name": "10.1.78.1/24"
+                    }
+                  }
+                }
+              },
+              {
+                "name": 80,
+                "description": "security.it",
+                "vlan-id": 80,
+                "family": {
+                  "inet": {
+                    "address": {
+                      "name": "10.1.80.1/24"
+                    }
+                  }
+                }
+              },
+              {
+                "name": 81,
+                "description": "top_1",
+                "vlan-id": 81,
+                "family": {
+                  "inet": {
+                    "address": {
+                      "name": "10.1.81.1/28"
+                    }
+                  }
+                }
+              },
+              {
+                "name": 82,
+                "description": "top_2",
+                "vlan-id": 82,
+                "family": {
+                  "inet": {
+                    "address": {
+                      "name": "10.1.81.17/28"
+                    }
+                  }
+                }
+              },
+              {
+                "name": 83,
+                "description": "top_3",
+                "vlan-id": 83,
+                "family": {
+                  "inet": {
+                    "address": {
+                      "name": "10.1.81.33/28"
+                    }
+                  }
+                }
+              },
+              {
+                "name": 84,
+                "description": "top_4",
+                "vlan-id": 84,
+                "family": {
+                  "inet": {
+                    "address": {
+                      "name": "10.1.81.49/28"
+                    }
+                  }
+                }
+              },
+              {
+                "name": 85,
+                "description": "top_5",
+                "vlan-id": 85,
+                "family": {
+                  "inet": {
+                    "address": {
+                      "name": "10.1.81.65/28"
+                    }
+                  }
+                }
+              },
+              {
+                "name": 86,
+                "description": "top_6",
+                "vlan-id": 86,
+                "family": {
+                  "inet": {
+                    "address": {
+                      "name": "10.1.81.81/28"
+                    }
+                  }
+                }
+              },
+              {
+                "name": 87,
+                "description": "top_7",
+                "vlan-id": 87,
+                "family": {
+                  "inet": {
+                    "address": {
+                      "name": "10.1.81.97/28"
+                    }
+                  }
+                }
+              },
+              {
+                "name": 88,
+                "description": "top_8",
+                "vlan-id": 88,
+                "family": {
+                  "inet": {
+                    "address": {
+                      "name": "10.1.81.113/28"
+                    }
+                  }
+                }
+              },
+              {
+                "name": 89,
+                "description": "top_9",
+                "vlan-id": 89,
+                "family": {
+                  "inet": {
+                    "address": {
+                      "name": "10.1.81.129/28"
+                    }
+                  }
+                }
+              },
+              {
+                "name": 90,
+                "description": "top_10",
+                "vlan-id": 90,
+                "family": {
+                  "inet": {
+                    "address": {
+                      "name": "10.1.81.145/28"
+                    }
+                  }
+                }
+              },
+              {
+                "name": 91,
+                "description": "top_11",
+                "vlan-id": 91,
+                "family": {
+                  "inet": {
+                    "address": {
+                      "name": "10.1.81.161/28"
+                    }
+                  }
+                }
+              },
+              {
+                "name": 92,
+                "description": "top_12",
+                "vlan-id": 92,
+                "family": {
+                  "inet": {
+                    "address": {
+                      "name": "10.1.81.177/28"
+                    }
+                  }
+                }
+              },
+              {
+                "name": 93,
+                "description": "top_13",
+                "vlan-id": 93,
+                "family": {
+                  "inet": {
+                    "address": {
+                      "name": "10.1.81.193/28"
+                    }
+                  }
+                }
+              },
+              {
+                "name": 94,
+                "description": "top_14",
+                "vlan-id": 94,
+                "family": {
+                  "inet": {
+                    "address": {
+                      "name": "10.1.81.209/28"
+                    }
+                  }
+                }
+              },
+              {
+                "name": 180,
+                "description": "sec_mgmt",
+                "vlan-id": 180,
+                "family": {
+                  "inet": {
+                    "address": {
+                      "name": "10.1.180.1/24"
+                    }
+                  }
+                }
+              },
+              {
+                "name": 181,
+                "description": "sec_ext_hosts",
+                "vlan-id": 181,
+                "family": {
+                  "inet": {
+                    "address": {
+                      "name": "10.1.181.1/24"
+                    }
+                  }
+                }
+              },
+              {
+                "name": 182,
+                "description": "sec_int_hosts",
+                "vlan-id": 182,
+                "family": {
+                  "inet": {
+                    "address": {
+                      "name": "10.1.182.1/24"
+                    }
+                  }
+                }
+              },
+              {
+                "name": 183,
+                "description": "sec_dev_hosts",
+                "vlan-id": 183,
+                "family": {
+                  "inet": {
+                    "address": {
+                      "name": "10.1.183.1/24"
+                    }
+                  }
+                }
+              },
+              {
+                "name": 184,
+                "description": "sec_other",
+                "vlan-id": 184,
+                "family": {
+                  "inet": {
+                    "address": {
+                      "name": "10.1.184.1/24"
+                    }
+                  }
+                }
+              },
+              {
+                "name": 185,
+                "description": "sec_k8s_nodes",
+                "vlan-id": 185,
+                "family": {
+                  "inet": {
+                    "address": {
+                      "name": "10.1.185.1/24"
+                    }
+                  }
+                }
+              },
+              {
+                "name": 901,
+                "description": "aquarius_srv",
+                "vlan-id": 901,
+                "family": {
+                  "inet": {
+                    "address": {
+                      "name": "10.1.254.1/29"
+                    }
+                  }
+                }
+              },
+              {
+                "name": 902,
+                "description": "1c",
+                "vlan-id": 902,
+                "family": {
+                  "inet": {
+                    "address": {
+                      "name": "10.1.254.9/29"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "fxp0",
+            "unit": {
+              "name": 0,
+              "family": {
+                "inet": {
+                  "address": {
+                    "name": "10.1.150.2/24"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "snmp": {
+        "community": {
+          "name": "snmp.nctmsk.ru",
+          "authorization": "read-only"
+        }
+      },
+      "forwarding-options": {
+        "dhcp-relay": {
+          "server-group": {
+            "server-group": {
+              "name": "dhcp_server",
+              "address": {
+                "name": "10.1.1.10"
+              }
+            }
+          },
+          "active-server-group": {
+            "active-server-group": "dhcp_server"
+          },
+          "group": {
+            "name": "dhcp_clients",
+            "interface": [
+              {
+                "name": "ae1.5"
+              },
+              {
+                "name": "ae1.6"
+              },
+              {
+                "name": "ae1.7"
+              },
+              {
+                "name": "ae1.12"
+              },
+              {
+                "name": "ae1.35"
+              },
+              {
+                "name": "ae1.39"
+              },
+              {
+                "name": "ae1.40"
+              },
+              {
+                "name": "ae1.42"
+              },
+              {
+                "name": "ae1.44"
+              },
+              {
+                "name": "ae1.46"
+              },
+              {
+                "name": "ae1.48"
+              },
+              {
+                "name": "ae1.50"
+              },
+              {
+                "name": "ae1.52"
+              },
+              {
+                "name": "ae1.54"
+              },
+              {
+                "name": "ae1.56"
+              },
+              {
+                "name": "ae1.58"
+              },
+              {
+                "name": "ae1.60"
+              },
+              {
+                "name": "ae1.62"
+              },
+              {
+                "name": "ae1.64"
+              },
+              {
+                "name": "ae1.66"
+              },
+              {
+                "name": "ae1.68"
+              },
+              {
+                "name": "ae1.70"
+              },
+              {
+                "name": "ae1.71"
+              },
+              {
+                "name": "ae1.78"
+              },
+              {
+                "name": "ae1.80"
+              },
+              {
+                "name": "ae1.81"
+              },
+              {
+                "name": "ae1.82"
+              },
+              {
+                "name": "ae1.83"
+              },
+              {
+                "name": "ae1.84"
+              },
+              {
+                "name": "ae1.85"
+              },
+              {
+                "name": "ae1.86"
+              },
+              {
+                "name": "ae1.87"
+              },
+              {
+                "name": "ae1.88"
+              },
+              {
+                "name": "ae1.89"
+              },
+              {
+                "name": "ae1.90"
+              },
+              {
+                "name": "ae1.91"
+              },
+              {
+                "name": "ae1.92"
+              },
+              {
+                "name": "ae1.93"
+              },
+              {
+                "name": "ae1.94"
+              }
+            ]
+          }
+        }
+      },
+      "policy-options": {
+        "policy-statement": [
+          {
+            "name": "sec_k8s_nodes_in",
+            "term": [
+              {
+                "name": 1,
+                "from": {
+                  "route-filter": {
+                    "address": "10.1.187.0/24",
+                    "longer": ""
+                  }
+                },
+                "then": {
+                  "accept": ""
+                }
+              },
+              {
+                "name": 2,
+                "then": {
+                  "reject": ""
+                }
+              }
+            ]
+          },
+          {
+            "name": "sec_k8s_nodes_out",
+            "term": [
+              {
+                "name": 1,
+                "from": {
+                  "route-filter": {
+                    "address": "0.0.0.0/0",
+                    "exact": ""
+                  }
+                },
+                "then": {
+                  "next-hop": {
+                    "self": ""
+                  },
+                  "accept": ""
+                }
+              },
+              {
+                "name": 2,
+                "then": {
+                  "reject": ""
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "applications": {
+        "application": [
+          {
+            "name": "jira",
+            "protocol": "tcp",
+            "destination-port": 8090
+          },
+          {
+            "name": "nct-ssh",
+            "protocol": "tcp",
+            "destination-port": 22,
+            "inactivity-timeout": 86400
+          },
+          {
+            "name": "nct-rdp",
+            "protocol": "tcp",
+            "destination-port": 3389,
+            "inactivity-timeout": 86400
+          },
+          {
+            "name": "kaspersky",
+            "protocol": "tcp",
+            "destination-port": 13000
+          },
+          {
+            "name": "DLP",
+            "protocol": "tcp",
+            "destination-port": 4443
+          },
+          {
+            "name": "1c",
+            "protocol": "tcp",
+            "destination-port": 1561
+          },
+          {
+            "name": "pxmx",
+            "description": "proxmox_mgmt",
+            "protocol": "tcp",
+            "destination-port": 8006
+          }
+        ]
+      },
+      "protocols": {
+        "bgp": {
+          "group": {
+            "name": "sec_k8s_nodes",
+            "import": "sec_k8s_nodes_in",
+            "export": "sec_k8s_nodes_out",
+            "peer-as": 65535,
+            "local-as": {
+              "as-number": 65535
+            },
+            "neighbor": [
+              {
+                "name": "10.1.185.2"
+              },
+              {
+                "name": "10.1.185.3"
+              },
+              {
+                "name": "10.1.185.10"
+              },
+              {
+                "name": "10.1.185.11"
+              },
+              {
+                "name": "10.1.185.12"
+              },
+              {
+                "name": "10.1.185.4"
+              },
+              {
+                "name": "10.1.185.6"
+              },
+              {
+                "name": "10.1.185.20"
+              },
+              {
+                "name": "10.1.185.21"
+              },
+              {
+                "name": "10.1.185.22"
+              }
+            ]
+          }
+        }
+      },
+      "routing-options": {
+        "static": {
+          "route": [
+            {
+              "name": "0.0.0.0/0",
+              "next-hop": "10.1.255.1"
+            },
+            {
+              "name": "195.239.51.235/32",
+              "next-hop": "10.1.1.90"
+            }
+          ]
+        }
+      }
+    },
+    "cli": {
+      "banner": ""
+    }
+  }
+}
